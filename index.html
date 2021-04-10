@@ -27,16 +27,63 @@
 
         <!-- JQuery -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <!-- Own -->
         <link rel="stylesheet" type="text/css" href="frontend/css/style.css" />
         <script src="frontend/js/app.js"></script>
+        <script src ="backend/jsonClient/controller.js"></script>
 
         <title>Appointment Finder</title>
     </head>
     <body>
         <div class="container">
             <h1 class="text-center">Appointment Finder</h1>
+    
+        <!--Search field-->
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm-9">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="seachfield" placeholder="Search via lastname">
+                    <button type="button" class="btn btn-success" id="btn_Search">Seach</button>
+                </div>
+            </div>
+            <div class="col-sm"></div>
+        </div>
+
+
+        <!-- message -->
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm-9" id="searchResult">
+                <label for="noOfentries" class="form-label">Number of entries found:</label>
+                <input type="text" readonly class="form-control-plaintext" id="noOfentries">
+            </div>
+            <div class="col-sm"></div>
+        </div>
+
+        <div id="dynamic"></div>
+
+        <!-- User Info Table -->
+
+        <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm-9">
+                <table class="table" id="userTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Location</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        <tr></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </body>
 </html>

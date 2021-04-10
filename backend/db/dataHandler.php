@@ -1,17 +1,19 @@
 <?php
-include("./models/person.php");
+$dRoot = $_SERVER["DOCUMENT_ROOT"];
+include_once($dRoot . "/AppointmentFinder/backend/models/appointment.php");
+
 class DataHandler
 {
-    public function queryPersons()
+    public function queryAppointments()
     {
         $res =  $this->getDemoData();
         return $res;
     }
 
-    public function queryPersonById($id)
+    public function queryAppointmentByID($id)
     {
         $result = array();
-        foreach ($this->queryPersons() as $val) {
+        foreach ($this->queryAppointments() as $val) {
             if (strcasecmp($val->id, $id) == 0) {
                 array_push($result, $val);
             }
@@ -19,25 +21,23 @@ class DataHandler
         return $result;
     }
 
-    public function queryPersonByName($name)
+    public function queryAppointmentByName($name)
     {
         $result = array();
-        foreach ($this->queryPersons() as $val) {
+        foreach ($this->queryAppointments() as $val) {
             if (strcasecmp($val->lastname, $name) == 0) {
                 array_push($result, $val);
             }
         }
         return $result;
     }
-    // strcasecmp
-    private static function getDemoData()
-    {
+
+    private static function getDemoData() {
         $demodata = [
-            // Kann man das doppelte array weghauen
-            new Person(1, "Jane", "Doe", "jane.doe@fhtw.at", 1234567, "Central IT"),
-            new Person(2, "John", "Doe", "john.doe@fhtw.at", 34345654, "Help Desk"),
-            new Person(3, "baby", "Doe", "baby.doe@fhtw.at", 54545455, "Management"),
-            new Person(4, "Mike", "Smith", "mike.smith@fhtw.at", 343477778, "Faculty"),
+            new Appointment(1, "Projekt Meeting", "16:30, 20.01.2021", "Wien"),
+            new Appointment(2, "Berufsmeeting", "6:30, 23.05.2021", "Wien"),
+            new Appointment(3, "Abgabegespräch", "9:00, 11.01.2021", "Wien"),
+            new Appointment(4, "Sprint Review #3", "17:00, 20.01.2021", "Wien"),
         ];
         return $demodata;
     }

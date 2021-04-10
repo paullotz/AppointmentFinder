@@ -1,5 +1,5 @@
 <?php
-include("db/dataHandler.php");
+include_once("{$_SERVER['DOCUMENT_ROOT']}/AppointmentFinder/backend/db/dataHandler.php");
 
 class SimpleLogic
 {
@@ -12,14 +12,14 @@ class SimpleLogic
     function handleRequest($method, $param)
     {
         switch ($method) {
-            case "queryPersons":
-                $res = $this->dh->queryPersons();
+            case "queryAppointments":
+                $res = $this->dh->queryAppointments();
                 break;
-            case "queryPersonById":
-                $res = $this->dh->queryPersonById($param);
+            case "queryAppointmentByID":
+                $res = $this->dh->queryAppointmentByID($param);
                 break;
-            case "queryPersonByName":
-                $res = $this->dh->queryPersonByName($param);
+            case "queryAppointmentByName":
+                $res = $this->dh->queryAppointmentByName($param);
                 break;
             default:
                 $res = null;
