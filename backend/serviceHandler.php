@@ -15,8 +15,7 @@ if ($result == null) {
     response("GET", 200, $result);
 }
 
-function response($method, $httpStatus, $data)
-{
+function response($method, $httpStatus, $data) {
     header('Content-Type: application/json');
     switch ($method) {
         case "GET":

@@ -1,17 +1,20 @@
 body {
-    background-color: rgba(124, 179, 193, 0.59);
-    font-family: 'Nunito', sans-serif;
+	background-color: rgba(124, 179, 193, 0.59);
+	font-family: "Nunito", sans-serif;
 }
 
 h1 {
-    margin-top: 20px;
+	margin-top: 20px;
 }
 
-#searchField {
-    margin-top: 20px;
+#searchAppointmentsCard {
+	margin-top: 20px;
 }
 
-#addField {
-    margin-top: 20px;
-    margin-bottom: 30px;
+#addAppointmentsCard {
+	margin-top: 20px;
+}
+
+#allAppointmentsCard {
+	margin-top: 20px;
 }

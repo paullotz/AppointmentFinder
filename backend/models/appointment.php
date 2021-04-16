@@ -1,14 +1,16 @@
 <?php
-class Appointment {
+class Appointment
+{
     public $id;
     public $name;
-    public $time;
+    public $notes;
     public $location;
 
-    function __construct($id, $name, $time, $location) {
+    function __construct($id, $name, $notes, $location)
+    {
         $this->id = $id;
         $this->name = $name;
-        $this->time = $time;
+        $this->notes = $notes;
         $this->location = $location;
-      }
-  }
+    }
+}
