@@ -1,16 +1,26 @@
 <?php
 class Appointment
 {
-    public $id;
-    public $name;
-    public $notes;
+    public $appointmentId;
+    public $appointmentDate;
+    public $appointmentStartTime;
+    public $appointmentEndTime;
     public $location;
+    public $subject;
+    public $username;
+    public $votingExpiryDate;
+    public $votingExpiryTime;
 
-    function __construct($id, $name, $notes, $location)
+    function __construct($appointmentId, $appointmentDate, $appointmentStartTime, $appointmentEndTime ,$location, $subject, $username, $votingExpiryDate, $votingExpiryTime)
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->notes = $notes;
+        $this->appointmentId = $appointmentId;
+        $this->appointmentDate = $appointmentDate;
+        $this->appointmentStartTime = $appointmentStartTime;
+        $this->appointmentEndTime = $appointmentEndTime;
         $this->location = $location;
+        $this->subject = $subject;
+        $this->username = $username;
+        $this->votingExpiryDate = $votingExpiryDate;
+        $this->votingExpiryTime = $votingExpiryTime;
     }
 }

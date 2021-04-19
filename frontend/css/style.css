@@ -1,20 +1,35 @@
 body {
-	background-color: rgba(124, 179, 193, 0.59);
-	font-family: "Nunito", sans-serif;
+    background-color: rgba(124, 179, 193, 0.59);
+    font-family: "Nunito", sans-serif;
 }
 
 h1 {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 #searchAppointmentsCard {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 #addAppointmentsCard {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 #allAppointmentsCard {
-	margin-top: 20px;
+    margin-top: 20px;
+}
+
+#basicFeaturesCard {
+    width: 28em;
+    margin: 0 auto;
+    float: none;
+    margin-bottom: 20px;
+}
+
+#userNameField {
+    margin-bottom: 10px;
+}
+
+#newTaskTxts {
+    margin-bottom: 20px;
 }

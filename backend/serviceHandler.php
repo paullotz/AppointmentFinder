@@ -9,6 +9,7 @@ isset($_GET["param"]) ? $param = $_GET["param"] : false;
 
 $logic = new SimpleLogic();
 $result = $logic->handleRequest($method, $param);
+
 if ($result == null) {
     response("GET", 400, null);
 } else {
