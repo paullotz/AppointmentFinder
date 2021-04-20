@@ -2,9 +2,9 @@ var boolNewCard = false;
 var boolSearchCard = false;
 
 $(document).ready(function () {
-    $("#detailsAppointmentCard").hide();
     $("#searchAppointmentsCard").hide();
     $("#newAppointmentsCard").hide();
+    $("#detailsAppointmentCard").hide();
 });
 
 function showSearchCard() {

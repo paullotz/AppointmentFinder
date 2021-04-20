@@ -64,6 +64,7 @@
                             placeholder="Username"
                             aria-label="Username"
                             aria-describedby="basic-addon1"
+                            value="asdad"
                         />
                     </div>
 
@@ -119,13 +120,6 @@
                         >
                             Search by Name
                         </button>
-                        <button
-                            type="button"
-                            class="btn btn-success"
-                            id="btnRefreshTasks"
-                        >
-                            <span class="material-icons">refresh</span>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -144,6 +138,7 @@
                             id="txtAppointmentDate"
                             class="form-control"
                             aria-describedby="basic-addon1"
+                            value="2021-12-31"
                         />
 
                         <span class="input-group-text" id="basic-addon1">
@@ -156,6 +151,7 @@
                             class="form-control"
                             aria-label="Username"
                             aria-describedby="basic-addon1"
+                            value="09:00"
                         />
 
                         <span class="input-group-text" id="basic-addon1">
@@ -164,9 +160,11 @@
 
                         <input
                             type="time"
+                            id="txtEndTime"
                             class="form-control"
                             aria-label="Username"
                             aria-describedby="basic-addon1"
+                            value="17:00"
                         />
                     </div>
 
@@ -176,9 +174,11 @@
                         >
                         <input
                             type="text"
+                            id="txtLocation"
                             class="form-control"
                             placeholder="Wien"
                             aria-describedby="basic-addon1"
+                            value="Wien"
                         />
                     </div>
 
@@ -188,9 +188,11 @@
                         >
                         <input
                             type="text"
+                            id="txtSubject"
                             class="form-control"
                             placeholder="Subject"
                             aria-describedby="basic-addon1"
+                            value="InserMeeting"
                         />
                     </div>
 
@@ -202,9 +204,11 @@
 
                         <input
                             type="date"
+                            id="txtExpiryVotingDate"
                             class="form-control"
                             aria-label="Username"
                             aria-describedby="basic-addon1"
+                            value="2022-01-01"
                         />
 
                         <span class="input-group-text" id="basic-addon1">
@@ -213,9 +217,11 @@
 
                         <input
                             type="time"
+                            id="txtExpiryVotingTime"
                             class="form-control"
                             aria-label="Username"
                             aria-describedby="basic-addon1"
+                            value="09:00"
                         />
                     </div>
 
@@ -229,32 +235,164 @@
                 </div>
             </div>
 
+            <!-- Details Appointment Card -->
+            <div id="detailsAppointmentCard" class="card border-dark">
+                <div class="card-body">
+                    <h2>Details of Appointment</h2>
+                    <h3>Appointment Date</h3>
+                    <div class="input-group" id="newTaskTxts">
+                        <span class="input-group-text" id="basic-addon1">
+                            Date
+                        </span>
+
+                        <input
+                            type="date"
+                            id="txtDetailsAppointmentDate"
+                            class="form-control"
+                            aria-describedby="basic-addon1"
+                            readonly
+                        />
+
+                        <span class="input-group-text" id="basic-addon1">
+                            Start time
+                        </span>
+
+                        <input
+                            type="time"
+                            id="txtDetailsStartTime"
+                            class="form-control"
+                            aria-label="Username"
+                            aria-describedby="basic-addon1"
+                            readonly
+                        />
+
+                        <span class="input-group-text" id="basic-addon1">
+                            End time
+                        </span>
+
+                        <input
+                            type="time"
+                            id="txtDetailsEndTime"
+                            class="form-control"
+                            aria-label="Username"
+                            aria-describedby="basic-addon1"
+                            readonly
+                        />
+                    </div>
+
+                    <div class="input-group" id="newTaskTxts">
+                        <span class="input-group-text" id="basic-addon1"
+                            >Location</span
+                        >
+                        <input
+                            type="text"
+                            id="txtDetailsLocation"
+                            class="form-control"
+                            placeholder="Wien"
+                            aria-describedby="basic-addon1"
+                            readonly
+                        />
+                    </div>
+
+                    <div class="input-group" id="newTaskTxts">
+                        <span class="input-group-text" id="basic-addon1"
+                            >Subject</span
+                        >
+                        <input
+                            type="text"
+                            id="txtDetailsSubject"
+                            class="form-control"
+                            placeholder="Subject"
+                            aria-describedby="basic-addon1"
+                            readonly
+                        />
+                    </div>
+
+                    <h3>Voting</h3>
+                    <div class="table-responsive">
+                        <table class="table" id="detailsTable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">
+                                        <i class="material-icons">done</i>
+                                    </th>
+                                    <th scope="col">Start time</th>
+                                    <th scope="col">End time</th>
+                                    <th scope="col">Reserved by</th>
+                                    <th scope="col">Comment</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detailsTbody">
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="input-group" id="newTaskTxts">
+                        <button
+                            type="button"
+                            class="btn btn-success"
+                            id="btnVote"
+                        >
+                            Vote
+                        </button>
+                    </div>
+
+                    <h3>Ablauf Datum Voting</h3>
+                    <div class="input-group" id="newTaskTxts">
+                        <span class="input-group-text" id="basic-addon1">
+                            Date
+                        </span>
+
+                        <input
+                            type="date"
+                            id="txtDetailsExpiryDate"
+                            class="form-control"
+                            aria-label="Username"
+                            aria-describedby="basic-addon1"
+                            readonly
+                        />
+
+                        <span class="input-group-text" id="basic-addon1">
+                            Time
+                        </span>
+
+                        <input
+                            type="time"
+                            id="txtDetailsExpiryTime"
+                            class="form-control"
+                            aria-label="Username"
+                            aria-describedby="basic-addon1"
+                            readonly
+                        />
+                    </div>
+                </div>
+            </div>
+
             <!-- All Appointments Card -->
             <div id="allAppointmentsCard" class="card border-dark">
                 <div class="card-body">
                     <div id="noOfEntries"></div>
-                    <table class="table" id="userTable">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Start time</th>
-                                <th scope="col">End time</th>
-                                <th scope="col">Location</th>
-                                <th scope="col">Subject</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Voting Expiry Date</th>
-                                <th scope="col">Voting Expiry Time</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbody">
-                            <tr></tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table" id="appointmentTable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Location</th>
+                                    <th scope="col">Subject</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Details</th>
+                                    <th scope="col">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appointmentTbody">
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-
-            <div id="detailsAppointmentCard"></div>
         </div>
     </body>
 </html>

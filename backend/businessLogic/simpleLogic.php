@@ -20,6 +20,14 @@ class SimpleLogic {
             case "queryAppointmentByName":
                 $res = $this->dh->queryAppointmentByName($param);
                 break;
+
+            case "deleteAppointmentById":
+                    $res = $this->dh->deleteAppointmentById($param);
+                    break;
+                
+            case "queryTimeslotsById":
+                $res = $this->dh->queryTimeslotsById($param);
+                break;
                 
             default:
                 $res = null;
@@ -27,4 +35,11 @@ class SimpleLogic {
         }
         return $res;
     }
+
+    function addAppointment($appointmentDate, $startTime, $endTime, $location, $subject, $expiryVotingDate, $expiryVotingTime, $username) {
+        // call function addAppointment from DH
+        $res = $this->dh->addAppointment($appointmentDate, $startTime, $endTime, $location, $subject, $expiryVotingDate, $expiryVotingTime, $username);
+        return $res;
+    }
 }
+    
