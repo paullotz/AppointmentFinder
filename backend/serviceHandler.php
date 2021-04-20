@@ -14,6 +14,10 @@ $expiryVotingDate = "";
 $expiryVotingTime = "";
 $username = "";
 
+// Vars for updating timeslots
+$timeslotId = "";
+$commentContent = "";
+
 // Var for saving the method that will be used used for both types of requests
 $method = "";
 
@@ -31,12 +35,17 @@ isset($_GET["subject"]) ? $subject = $_GET["subject"] : false;
 isset($_GET["expiryVotingDate"]) ? $expiryVotingDate = $_GET["expiryVotingDate"] : false;
 isset($_GET["expiryVotingTime"]) ? $expiryVotingTime = $_GET["expiryVotingTime"] : false;
 isset($_GET["username"]) ? $username = $_GET["username"] : false;
+isset($_GET["timeslotId"]) ? $timeslotId = $_GET["timeslotId"] : false;
+isset($_GET["commentContent"]) ? $commentContent = $_GET["commentContent"] : false;
 
 $logic = new SimpleLogic();
 
 if ($appointmentDate != false) {
     // Adding
     $result = $logic->addAppointment($appointmentDate, $startTime, $endTime, $location, $subject, $expiryVotingDate, $expiryVotingTime, $username);
+} else if ($timeslotId != false) {
+    // Update timeslot
+    $result = $logic->updateTimeslotById($timeslotId, $username, $commentContent);
 } else {
     // Loading
     $result = $logic->handleRequest($method, $param);

@@ -230,7 +230,7 @@
                         class="btn btn-success"
                         id="btnNewAppointment"
                     >
-                        Add Task
+                        Add appointment
                     </button>
                 </div>
             </div>
@@ -241,6 +241,8 @@
                     <h2>Details of Appointment</h2>
                     <h3>Appointment Date</h3>
                     <div class="input-group" id="newTaskTxts">
+                        <input type="hidden" id="txtDetailsAppointmentId" />
+
                         <span class="input-group-text" id="basic-addon1">
                             Date
                         </span>
@@ -310,7 +312,7 @@
 
                     <h3>Voting</h3>
                     <div class="table-responsive">
-                        <table class="table" id="detailsTable">
+                        <table class="table table-striped" id="detailsTable">
                             <thead>
                                 <tr>
                                     <th scope="col">
@@ -328,17 +330,25 @@
                         </table>
                     </div>
 
-                    <div class="input-group" id="newTaskTxts">
+                    <div class="input-group mb-3" id="votingArea">
+                        <input
+                            type="text"
+                            id="txtVoteComment"
+                            class="form-control"
+                            placeholder="Optional comment"
+                        />
                         <button
-                            type="button"
                             class="btn btn-success"
-                            id="btnVote"
+                            id="btnVoteTimeslot"
+                            type="button"
+                            id="button-addon2"
+                            onclick="selectTimeslot()"
                         >
                             Vote
                         </button>
                     </div>
 
-                    <h3>Ablauf Datum Voting</h3>
+                    <h3>Expiry Voting Date</h3>
                     <div class="input-group" id="newTaskTxts">
                         <span class="input-group-text" id="basic-addon1">
                             Date
@@ -374,7 +384,10 @@
                 <div class="card-body">
                     <div id="noOfEntries"></div>
                     <div class="table-responsive">
-                        <table class="table" id="appointmentTable">
+                        <table
+                            class="table table-striped"
+                            id="appointmentTable"
+                        >
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>

@@ -55,11 +55,13 @@ class DataHandler {
 
                 array_push($appointmentObjects, $appointment);
             }
-        } else {
-            echo "0 results";
         }
 
-        return $appointmentObjects;
+        if ($appointmentObjects == null) {
+            return true;
+        } else {
+            return $appointmentObjects;
+        }
     }
 
     public function queryAppointmentByID($id) {
@@ -83,36 +85,13 @@ class DataHandler {
 
                 array_push($appointmentObjects, $appointment);
             }
-        } else {
-            echo "0 results";
         }
 
-        return $appointmentObjects;
-    }
-
-    public function queryTimeslotsById($id) {
-        $sql = "SELECT * FROM timeslots WHERE appointmentId = {$id}";
-        $result = $this->conn->query($sql);
-        $timeslotObjects = [];
-
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $timeslot = new TimeSlot(
-                    $row["timeslotId"],
-                    $row["appointmentId"],
-                    $row["startTime"],
-                    $row["endTime"],
-                    $row["username"],
-                    $row["commentContent"],
-                );
-
-                array_push($timeslotObjects, $timeslot);
-            }
+        if ($appointmentObjects == null) {
+            return true;
         } else {
-            echo "0 results";
+            return $appointmentObjects;
         }
-
-        return $timeslotObjects;
     }
 
     public function queryAppointmentByName($name) {
@@ -136,22 +115,55 @@ class DataHandler {
 
                 array_push($appointmentObjects, $appointment);
             }
-        } else {
-            echo "0 results";
         }
 
-        return $appointmentObjects;
+        if ($appointmentObjects == null) {
+            return true;
+        } else {
+            return $appointmentObjects;
+        }
+    }
+
+    public function queryTimeslotsById($id) {
+        $sql = "SELECT * FROM timeslots WHERE appointmentId = {$id}";
+        $result = $this->conn->query($sql);
+        $timeslotObjects = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $timeslot = new TimeSlot(
+                    $row["timeslotId"],
+                    $row["appointmentId"],
+                    $row["startTime"],
+                    $row["endTime"],
+                    $row["username"],
+                    $row["commentContent"],
+                );
+
+                array_push($timeslotObjects, $timeslot);
+            }
+        }
+
+        return $timeslotObjects;
     }
 
     public function deleteAppointmentById($id) {
         $sql = "DELETE FROM appointments WHERE appointmentId={$id}";
-        $result = $this->conn->query($sql);
+        $this->conn->query($sql);
 
-        if ($result) {
-            return $result;
-        } else {
-            return null;
-        }
+        $sql = "DELETE FROM timeslots WHERE appointmentId={$id}";
+        $this->conn->query($sql);
+
+        return true;
+    }
+    
+    public function updateTimeslotById($timeslotId, $username, $commentContent) {
+        $appointmentStmt = $this->conn->prepare("UPDATE timeslots SET username=?, commentContent=? WHERE timeslotId=?");
+        $appointmentStmt->bind_param("ssi", $username, $commentContent, $timeslotId);
+
+        $appointmentStmt->execute();
+
+        return true;
     }
 
     public function addAppointment($appointmentDate, $startTime, $endTime, $location, $subject, $expiryVotingDate, $expiryVotingTime, $username) {
@@ -192,7 +204,11 @@ class DataHandler {
                 $ctr++;
                 $minuteStartTime += 30;
             } else if ($ctr == 1) {
-                $timeSlotEndTime = $hourStartTime . " : " . $minuteStartTime;
+                if ($minuteStartTime == 0) {
+                    $timeSlotEndTime = $hourStartTime . " : 00";
+                } else {
+                    $timeSlotEndTime = $hourStartTime . " : " . $minuteStartTime;
+                }
 
                 /* DEBUG 
                 echo "Start time " . $timeSlotStartTime . "\n";
@@ -202,7 +218,7 @@ class DataHandler {
                 
                 // Insert timeslot into db
                 $timeslotStmt = $this->conn->prepare("INSERT INTO timeslots (appointmentId, startTime, endTime, username, commentContent) VALUES (?, ?, ?, ?, ?)");
-                $timeslotStmt->bind_param("issss", $appointmentId, $timeSlotStartTime, $timeSlotEndTime, $username, $slash);
+                $timeslotStmt->bind_param("issss", $appointmentId, $timeSlotStartTime, $timeSlotEndTime, $slash, $slash);
         
                 $timeslotStmt->execute();
 

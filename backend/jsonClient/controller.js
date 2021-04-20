@@ -50,6 +50,7 @@ $(document).ready(function () {
     });
 });
 
+// Functions handling button input
 function showDetails(entry) {
     // Get appointmentId & show details in a card
     var appointmentId = entry.getAttribute("appointment-id");
@@ -65,9 +66,35 @@ function deleteAppointment(entry) {
     deleteAppointmentById(appointmentId);
 }
 
+function selectTimeslot() {
+    var tblDetails = document.getElementById("detailsTable");
+    var boxes = tblDetails.getElementsByTagName("INPUT");
+    var appointmentId = $("#txtDetailsAppointmentId").val();
+    var timeslotId = 0;
+    var comment = $("#txtVoteComment").val();
+    var username = $("#txtUsername").val();
+
+    if (comment == "") {
+        comment = "/";
+    }
+
+    for (var i = 0; i < boxes.length; i++) {
+        if (boxes[i].checked) {
+            timeslotId = boxes[i].getAttribute("timeslot-id");
+            updateTimeslotById(timeslotId, username, comment);
+        }
+    }
+
+    loadTimeslotsById(appointmentId);
+
+    $("#txtVoteComment").val("");
+}
+
+// Functions for handling data received by ajax calls
 function reloadDetails(response) {
     var item = response[0];
 
+    $("#txtDetailsAppointmentId").val(item.appointmentId);
     $("#txtDetailsAppointmentDate").val(item.appointmentDate);
     $("#txtDetailsStartTime").val(item.appointmentStartTime);
     $("#txtDetailsEndTime").val(item.appointmentEndTime);
@@ -80,12 +107,33 @@ function reloadDetails(response) {
 function reloadTimeslots(response) {
     $("#detailsTbody").empty();
 
+    // Compare dates if voting date is expired lock boxes and display message
+    var expiryDate =
+        $("#txtDetailsExpiryDate").val() +
+        "T" +
+        $("#txtDetailsExpiryTime").val();
+
+    var expiryDateCast = new Date(expiryDate);
+    var currentDate = new Date();
+    var expired = false;
+
+    if (expiryDateCast.getTime() < currentDate.getTime()) {
+        expired = true;
+
+        $("#votingArea").hide();
+    }
+
     $.each(response, function (i, item) {
         var checkBoxVote = document.createElement("input");
 
         checkBoxVote.className = "form-check-input";
         checkBoxVote.type = "checkbox";
         checkBoxVote.id = "checkBoxAppointment";
+        checkBoxVote.setAttribute("timeslot-id", item.timeslotId);
+
+        if (item.username != "/" || expired) {
+            checkBoxVote.disabled = "disabled";
+        }
 
         // Show basic information about the appointment
         var $tr = $("<tr>")
@@ -112,6 +160,17 @@ function reloadEntries(response) {
         btnDetails.className = "btn btn-info";
         btnDetails.setAttribute("appointment-id", item.appointmentId);
         btnDetails.setAttribute("onclick", "showDetails(this)");
+
+        var expiryDate = item.appointmentDate + "T" + "12:00";
+        var expiryDateCast = new Date(expiryDate);
+        var currentDate = new Date();
+
+        console.log(expiryDateCast.getTime());
+        console.log(currentDate.getTime());
+
+        if (expiryDateCast.getTime() < currentDate.getTime()) {
+            btnDetails.innerHTML = "Abgelaufen";
+        }
 
         btnDelete.innerHTML = "Delete";
         btnDelete.className = "btn btn-danger";
@@ -162,8 +221,31 @@ function addAppointment(
         dataType: "json",
 
         success: function (response) {
-            alert("Appointment has been added!");
             loadAllTasks();
+        },
+
+        error: function (data) {
+            console.log("Ajax not loaded: addAppointment");
+            console.log(data);
+        },
+    });
+}
+
+function updateTimeslotById(upTimeslotId, upUsername, upCommentContent) {
+    $.ajax({
+        type: "GET",
+        url: serviceHandlerURL,
+        cache: false,
+        data: {
+            method: "updateTimeslotById",
+            timeslotId: upTimeslotId,
+            username: upUsername,
+            commentContent: upCommentContent,
+        },
+        dataType: "json",
+
+        success: function (response) {
+            console.log("Ajax loaded: updateTimeslotById");
         },
 
         error: function (data) {
@@ -186,13 +268,11 @@ function deleteAppointmentById(id) {
         dataType: "json",
 
         success: function (response) {
-            alert("Appointment has been deleted!");
-
             loadAllTasks();
         },
 
         error: function (data) {
-            alert(data);
+            console.log(data);
             console.log("Ajax not loaded");
         },
     });
@@ -217,7 +297,7 @@ function loadDetailsById(id) {
         },
 
         error: function (data) {
-            alert(data);
+            console.log(data);
             console.log("Ajax not loaded");
         },
     });
@@ -260,16 +340,20 @@ function loadAppointmentById(id) {
         dataType: "json",
 
         success: function (response) {
-            console.log("Ajax Loaded: loadTaskById");
-            $("#noOfEntries").text("Open appointments: " + response.length);
-            $("#searchResult").show(1000).delay(1000);
-            $("#appointmentTable").show(2000).delay(1000);
+            if (response != true) {
+                console.log("Ajax Loaded: loadTaskById");
+                $("#noOfEntries").text("Open appointments: " + response.length);
 
-            reloadEntries(response);
+                reloadEntries(response);
+            } else {
+                console.log("Ajax Error: loadTaskById -> response is empty");
+                $("#appointmentTbody").empty();
+                $("#noOfEntries").text("");
+            }
         },
 
         error: function (data) {
-            alert(data);
+            console.log(data);
             console.log("Ajax not loaded");
         },
     });
@@ -287,12 +371,18 @@ function loadTaskByName(searchterm) {
         dataType: "json",
 
         success: function (response) {
-            console.log("Ajax Loaded: loadTaskByName");
-            $("#noOfEntries").text("Open appointments: " + response.length);
-            $("#searchResult").show(1000).delay(1000);
-            $("#appointmentTable").show(2000).delay(1000);
+            if (response != true) {
+                console.log("Ajax Loaded: loadTaskByName");
+                $("#noOfEntries").text("Open appointments: " + response.length);
 
-            reloadEntries(response);
+                reloadEntries(response);
+            } else {
+                console.log(
+                    "Ajax Error: loadTaskByName -> Error response is empty"
+                );
+                $("#appointmentTbody").empty();
+                $("#noOfEntries").text("");
+            }
         },
 
         error: function (data) {
@@ -312,17 +402,21 @@ function loadAllTasks() {
         dataType: "json",
 
         success: function (response) {
-            console.log("Ajax Loaded: loadAllTasks");
+            if (response != true) {
+                console.log("Ajax Loaded: loadAllTasks");
+                $("#noOfEntries").text("Open appointments: " + response.length);
 
-            $("#noOfEntries").text("Open appointments: " + response.length);
-            $("#searchResult").show(1000).delay(1000);
-            $("#appointmentTable").show(2000).delay(1000);
+                reloadEntries(response);
+            } else {
+                console.log("Ajax Error: loadAllTasks -> response is empty");
 
-            reloadEntries(response);
+                $("#appointmentTbody").empty();
+                $("#noOfEntries").text("");
+            }
         },
 
         error: function (data) {
-            console.log("Ajax not loaded");
+            console.log("Ajax not loaded: loadAllTasks");
             console.log(data);
         },
     });

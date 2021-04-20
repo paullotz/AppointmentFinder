@@ -41,5 +41,11 @@ class SimpleLogic {
         $res = $this->dh->addAppointment($appointmentDate, $startTime, $endTime, $location, $subject, $expiryVotingDate, $expiryVotingTime, $username);
         return $res;
     }
+
+    function updateTimeslotById($timeslotId, $username, $commentContent) {
+        // call function addAppointment from DH
+        $res = $this->dh->updateTimeslotById($timeslotId, $username, $commentContent);
+        return $res;
+    }
 }
     
