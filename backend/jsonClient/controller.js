@@ -165,9 +165,6 @@ function reloadEntries(response) {
         var expiryDateCast = new Date(expiryDate);
         var currentDate = new Date();
 
-        console.log(expiryDateCast.getTime());
-        console.log(currentDate.getTime());
-
         if (expiryDateCast.getTime() < currentDate.getTime()) {
             btnDetails.innerHTML = "Abgelaufen";
         }

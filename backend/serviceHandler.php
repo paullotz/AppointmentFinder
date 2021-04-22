@@ -1,5 +1,5 @@
 <?php
-include_once("{$_SERVER['DOCUMENT_ROOT']}/AppointmentFinder/backend/businessLogic/simpleLogic.php");
+include_once("{$_SERVER['DOCUMENT_ROOT']}/AppointmentFinder/backend/db/dataHandler.php");
 
 // Var for loading tables
 $param = "";
@@ -38,17 +38,41 @@ isset($_GET["username"]) ? $username = $_GET["username"] : false;
 isset($_GET["timeslotId"]) ? $timeslotId = $_GET["timeslotId"] : false;
 isset($_GET["commentContent"]) ? $commentContent = $_GET["commentContent"] : false;
 
-$logic = new SimpleLogic();
+$dh = new DataHandler();
 
 if ($appointmentDate != false) {
     // Adding
-    $result = $logic->addAppointment($appointmentDate, $startTime, $endTime, $location, $subject, $expiryVotingDate, $expiryVotingTime, $username);
+    $result = $dh->addAppointment($appointmentDate, $startTime, $endTime, $location, $subject, $expiryVotingDate, $expiryVotingTime, $username);
 } else if ($timeslotId != false) {
     // Update timeslot
-    $result = $logic->updateTimeslotById($timeslotId, $username, $commentContent);
+    $result = $dh->updateTimeslotById($timeslotId, $username, $commentContent);
 } else {
-    // Loading
-    $result = $logic->handleRequest($method, $param);
+    // Functions with non or only one parameter
+    switch ($method) {
+        case "queryAppointments":
+            $result = $dh->queryAppointments();
+            break;
+
+        case "queryAppointmentByID":
+            $result = $dh->queryAppointmentByID($param);
+            break;
+
+        case "queryAppointmentByName":
+            $result = $dh->queryAppointmentByName($param);
+            break;
+
+        case "deleteAppointmentById":
+            $result = $dh->deleteAppointmentById($param);
+            break;
+            
+        case "queryTimeslotsById":
+            $result = $dh->queryTimeslotsById($param);
+            break;
+            
+        default:
+            $result = null;
+            break;
+    }
 }
 
 if ($result == null) {
