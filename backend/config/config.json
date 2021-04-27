@@ -1,6 +1,6 @@
 {
     "database": {
-        "host": "192.168.0.25",
+        "host": "localhost",
         "table": "appointmentfinder",
         "user": "bif2webscriptinguser",
         "password": "bif2021"
