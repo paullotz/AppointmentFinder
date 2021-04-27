@@ -44,9 +44,10 @@ $(document).ready(function () {
         var startTime = $("#txtStartTime").val();
         var endTime = $("#txtEndTime").val();
         var location = $("#txtLocation").val();
-        var subject = $("#txtSubject").val();
         var expiryVotingDate = $("#txtExpiryVotingDate").val();
         var expiryVotingTime = $("#txtExpiryVotingTime").val();
+
+        var subject = $("#txtSubject").val();
         var username = $("#txtUsername").val();
 
         if (
@@ -76,8 +77,6 @@ $(document).ready(function () {
                 username
             );
         }
-
-        //loadAllTasks();
     });
 });
 
@@ -119,11 +118,14 @@ function selectTimeslot() {
         for (var i = 0; i < boxes.length; i++) {
             if (boxes[i].checked) {
                 timeslotId = boxes[i].getAttribute("timeslot-id");
-                updateTimeslotById(timeslotId, username, comment);
+                updateTimeslotById(
+                    appointmentId,
+                    timeslotId,
+                    username,
+                    comment
+                );
             }
         }
-
-        loadTimeslotsById(appointmentId);
 
         $("#txtVoteComment").val("");
     }
@@ -258,7 +260,6 @@ function addAppointment(
 
         success: function (response) {
             loadAllTasks();
-            console("added");
         },
 
         error: function (data) {
@@ -268,7 +269,7 @@ function addAppointment(
     });
 }
 
-function updateTimeslotById(upTimeslotId, upUsername, upCommentContent) {
+function updateTimeslotById(appId, upTimeslotId, upUsername, upCommentContent) {
     $.ajax({
         type: "GET",
         url: serviceHandlerURL,
@@ -283,6 +284,7 @@ function updateTimeslotById(upTimeslotId, upUsername, upCommentContent) {
 
         success: function (response) {
             console.log("Ajax loaded: updateTimeslotById");
+            loadTimeslotsById(appId);
         },
 
         error: function (data) {
