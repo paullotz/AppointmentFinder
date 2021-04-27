@@ -10,10 +10,12 @@ $dRoot = $_SERVER["DOCUMENT_ROOT"];
 include_once($dRoot . "/AppointmentFinder/backend/models/appointment.php");
 include_once($dRoot . "/AppointmentFinder/backend/models/timeslot.php");
 
-class DataHandler {
+class DataHandler
+{
     public $conn;
 
-    public function __construct() {
+    public function __construct()
+    {
         $dRoot = $_SERVER["DOCUMENT_ROOT"];
 
         // Get credentials from json config
@@ -34,7 +36,8 @@ class DataHandler {
         }
     }
 
-    public function queryAppointments() {
+    public function queryAppointments()
+    {
         $sql = "SELECT * FROM appointments";
         $result = $this->conn->query($sql);
         $appointmentObjects = [];
@@ -64,7 +67,8 @@ class DataHandler {
         }
     }
 
-    public function queryAppointmentByID($id) {
+    public function queryAppointmentByID($id)
+    {
         $sql = "SELECT * FROM appointments WHERE appointmentId = {$id}";
         $result = $this->conn->query($sql);
         $appointmentObjects = [];
@@ -94,7 +98,8 @@ class DataHandler {
         }
     }
 
-    public function queryAppointmentByName($name) {
+    public function queryAppointmentByName($name)
+    {
         $sql = "SELECT * FROM appointments WHERE subject = '{$name}'";
         $result = $this->conn->query($sql);
         $appointmentObjects = [];
@@ -124,7 +129,8 @@ class DataHandler {
         }
     }
 
-    public function queryTimeslotsById($id) {
+    public function queryTimeslotsById($id)
+    {
         $sql = "SELECT * FROM timeslots WHERE appointmentId = {$id}";
         $result = $this->conn->query($sql);
         $timeslotObjects = [];
@@ -147,7 +153,8 @@ class DataHandler {
         return $timeslotObjects;
     }
 
-    public function deleteAppointmentById($id) {
+    public function deleteAppointmentById($id)
+    {
         $sql = "DELETE FROM appointments WHERE appointmentId={$id}";
         $this->conn->query($sql);
 
@@ -156,8 +163,9 @@ class DataHandler {
 
         return true;
     }
-    
-    public function updateTimeslotById($timeslotId, $username, $commentContent) {
+
+    public function updateTimeslotById($timeslotId, $username, $commentContent)
+    {
         $appointmentStmt = $this->conn->prepare("UPDATE timeslots SET username=?, commentContent=? WHERE timeslotId=?");
         $appointmentStmt->bind_param("ssi", $username, $commentContent, $timeslotId);
 
@@ -166,7 +174,8 @@ class DataHandler {
         return true;
     }
 
-    public function addAppointment($appointmentDate, $startTime, $endTime, $location, $subject, $expiryVotingDate, $expiryVotingTime, $username) {
+    public function addAppointment($appointmentDate, $startTime, $endTime, $location, $subject, $expiryVotingDate, $expiryVotingTime, $username)
+    {
         $appointmentStmt = $this->conn->prepare("INSERT INTO appointments (appointmentDate, location, subject, votingExpiryDate, appointmentStartTime, appointmentEndTime, votingExpiryTime, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         $appointmentStmt->bind_param("ssssssss", $appointmentDate, $location, $subject, $expiryVotingDate, $startTime, $endTime, $expiryVotingTime, $username);
 
@@ -188,24 +197,30 @@ class DataHandler {
         $timeSlotEndTime = "";
         $ctr = 0;
 
-        for ($i = 0; $i <= $totalTimeSlots ; $i++) {
+        for ($i = 0; $i <= $totalTimeSlots; $i++) {
             if ($minuteStartTime >= 60) {
                 $hourStartTime++;
                 $minuteStartTime -= 60;
             }
 
+            //CTR0 = Starttime, CTR1 = Endtime
             if ($ctr == 0) {
-                if ($minuteStartTime == 0) {
-                    $timeSlotStartTime = $hourStartTime . " : 00";
+
+                if ($minuteStartTime < 10) {
+                    $timeSlotStartTime = $hourStartTime . " : 0" . $minuteStartTime;
                 } else {
                     $timeSlotStartTime = $hourStartTime . " : " . $minuteStartTime;
                 }
-                
+
+                if ($i == 0) {
+                    $timeSlotStartTime = $hourStartTime . " : " . $minuteStartTime;
+                }
+
                 $ctr++;
                 $minuteStartTime += 30;
             } else if ($ctr == 1) {
-                if ($minuteStartTime == 0) {
-                    $timeSlotEndTime = $hourStartTime . " : 00";
+                if ($minuteStartTime < 10) {
+                    $timeSlotEndTime = $hourStartTime . " : 0" . $minuteStartTime;
                 } else {
                     $timeSlotEndTime = $hourStartTime . " : " . $minuteStartTime;
                 }
@@ -215,22 +230,22 @@ class DataHandler {
                 echo "End time " . $timeSlotEndTime. "\n";
                 */
                 $slash = "/";
-                
+
                 // Insert timeslot into db
                 $timeslotStmt = $this->conn->prepare("INSERT INTO timeslots (appointmentId, startTime, endTime, username, commentContent) VALUES (?, ?, ?, ?, ?)");
                 $timeslotStmt->bind_param("issss", $appointmentId, $timeSlotStartTime, $timeSlotEndTime, $slash, $slash);
-        
+
                 $timeslotStmt->execute();
 
                 $ctr = 0;
-            } 
-
+            }
         }
 
         return true;
     }
 
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->conn->close();
     }
 }

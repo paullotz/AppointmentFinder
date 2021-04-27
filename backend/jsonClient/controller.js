@@ -77,8 +77,6 @@ $(document).ready(function () {
             );
         }
 
-        console.log("button has been clicked");
-
         //loadAllTasks();
     });
 });
@@ -107,20 +105,28 @@ function selectTimeslot() {
     var comment = $("#txtVoteComment").val();
     var username = $("#txtUsername").val();
 
-    if (comment == "") {
-        comment = "/";
-    }
-
-    for (var i = 0; i < boxes.length; i++) {
-        if (boxes[i].checked) {
-            timeslotId = boxes[i].getAttribute("timeslot-id");
-            updateTimeslotById(timeslotId, username, comment);
+    if (username == "") {
+        Swal.fire({
+            icon: "error",
+            title: "Oje...",
+            text: "Bitte Username eingeben!",
+        });
+    } else {
+        if (comment == "") {
+            comment = "/";
         }
+
+        for (var i = 0; i < boxes.length; i++) {
+            if (boxes[i].checked) {
+                timeslotId = boxes[i].getAttribute("timeslot-id");
+                updateTimeslotById(timeslotId, username, comment);
+            }
+        }
+
+        loadTimeslotsById(appointmentId);
+
+        $("#txtVoteComment").val("");
     }
-
-    loadTimeslotsById(appointmentId);
-
-    $("#txtVoteComment").val("");
 }
 
 // Functions for handling data received by ajax calls
