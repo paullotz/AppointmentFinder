@@ -1,11 +1,11 @@
 <?php
 
-use Symfony\Component\VarDumper\Cloner\Data;
-
+// Enablel PHP Debugging options
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// Getting full path of files
 $dRoot = $_SERVER["DOCUMENT_ROOT"];
 include_once($dRoot . "/AppointmentFinder/backend/models/appointment.php");
 include_once($dRoot . "/AppointmentFinder/backend/models/timeslot.php");

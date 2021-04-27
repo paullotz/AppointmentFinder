@@ -2,6 +2,17 @@ var boolNewCard = false;
 var boolSearchCard = false;
 
 $(document).ready(function () {
+    // Dynamic Loading of content
+    $("#searchAppointmentsCard").load(
+        "../frontend/parts/searchAppointment.html"
+    );
+    $("#newAppointmentsCard").load("../frontend/parts/newAppointment.html");
+    $("#detailsAppointmentCard").load(
+        "../frontend/parts/detailsAppointment.html"
+    );
+
+    $.getScript("../backend/jsonClient/controller.js");
+
     $("#searchAppointmentsCard").hide();
     $("#newAppointmentsCard").hide();
     $("#detailsAppointmentCard").hide();

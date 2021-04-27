@@ -1,0 +1,126 @@
+<div class="card-body">
+    <h2>Details of Appointment</h2>
+    <h3>Appointment Date</h3>
+    <div class="input-group" id="newTaskTxts">
+        <input type="hidden" id="txtDetailsAppointmentId" />
+
+        <span class="input-group-text" id="basic-addon1"> Date </span>
+
+        <input
+            type="date"
+            id="txtDetailsAppointmentDate"
+            class="form-control"
+            aria-describedby="basic-addon1"
+            readonly
+        />
+
+        <span class="input-group-text" id="basic-addon1"> Start time </span>
+
+        <input
+            type="time"
+            id="txtDetailsStartTime"
+            class="form-control"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+            readonly
+        />
+
+        <span class="input-group-text" id="basic-addon1"> End time </span>
+
+        <input
+            type="time"
+            id="txtDetailsEndTime"
+            class="form-control"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+            readonly
+        />
+    </div>
+
+    <div class="input-group" id="newTaskTxts">
+        <span class="input-group-text" id="basic-addon1">Location</span>
+        <input
+            type="text"
+            id="txtDetailsLocation"
+            class="form-control"
+            placeholder="Wien"
+            aria-describedby="basic-addon1"
+            readonly
+        />
+    </div>
+
+    <div class="input-group" id="newTaskTxts">
+        <span class="input-group-text" id="basic-addon1">Subject</span>
+        <input
+            type="text"
+            id="txtDetailsSubject"
+            class="form-control"
+            placeholder="Subject"
+            aria-describedby="basic-addon1"
+            readonly
+        />
+    </div>
+
+    <h3>Voting</h3>
+    <div class="table-responsive">
+        <table class="table table-striped" id="detailsTable">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        <i class="material-icons">done</i>
+                    </th>
+                    <th scope="col">Start time</th>
+                    <th scope="col">End time</th>
+                    <th scope="col">Reserved by</th>
+                    <th scope="col">Comment</th>
+                </tr>
+            </thead>
+            <tbody id="detailsTbody">
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="input-group mb-3" id="votingArea">
+        <input
+            type="text"
+            id="txtVoteComment"
+            class="form-control"
+            placeholder="Optional comment"
+        />
+        <button
+            class="btn btn-success"
+            id="btnVoteTimeslot"
+            type="button"
+            id="button-addon2"
+            onclick="selectTimeslot()"
+        >
+            Vote
+        </button>
+    </div>
+
+    <h3>Expiry Voting Date</h3>
+    <div class="input-group" id="newTaskTxts">
+        <span class="input-group-text" id="basic-addon1"> Date </span>
+
+        <input
+            type="date"
+            id="txtDetailsExpiryDate"
+            class="form-control"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+            readonly
+        />
+
+        <span class="input-group-text" id="basic-addon1"> Time </span>
+
+        <input
+            type="time"
+            id="txtDetailsExpiryTime"
+            class="form-control"
+            aria-label="Username"
+            aria-describedby="basic-addon1"
+            readonly
+        />
+    </div>
+</div>

@@ -1,3 +1,4 @@
+// Service Handler URL
 var serviceHandlerURL = "../backend/serviceHandler.php";
 
 // Loading JQuery
@@ -45,6 +46,8 @@ $(document).ready(function () {
             expiryVotingTime,
             username
         );
+
+        console.log("button has been clicked");
 
         //loadAllTasks();
     });
@@ -219,6 +222,7 @@ function addAppointment(
 
         success: function (response) {
             loadAllTasks();
+            console("added");
         },
 
         error: function (data) {
