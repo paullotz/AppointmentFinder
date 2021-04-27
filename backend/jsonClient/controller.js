@@ -5,24 +5,37 @@ var serviceHandlerURL = "../backend/serviceHandler.php";
 $(document).ready(function () {
     loadAllTasks();
 
-    $("#btnSearchById").click(function () {
-        $("#appointmentTbody").html("");
-        loadAppointmentById($("#txtSearchField").val());
-    });
-
-    $("#btnRefreshTasks").click(function () {
-        $("#appointmentTbody").html("");
-        loadAllTasks();
-    });
-
-    $("#btnSearchByName").click(function () {
-        $("#appointmentTbody").html("");
-        loadTaskByName($("#txtSearchField").val());
-    });
-
     $("#btnRefresh").click(function () {
         $("#appointmentTbody").html("");
         loadAllTasks();
+    });
+
+    $("#btnSearchById").click(function () {
+        var id = $("#txtSearchField").val();
+        if (id == "") {
+            Swal.fire({
+                icon: "error",
+                title: "Oje...",
+                text: "Bitte Parameter eingeben!",
+            });
+        } else {
+            $("#appointmentTbody").html("");
+            loadAppointmentById($("#txtSearchField").val());
+        }
+    });
+
+    $("#btnSearchByName").click(function () {
+        var name = $("#txtSearchField").val();
+        if (name == "") {
+            Swal.fire({
+                icon: "error",
+                title: "Oje...",
+                text: "Bitte Parameter eingeben!",
+            });
+        } else {
+            $("#appointmentTbody").html("");
+            loadAppointmentByName($("#txtSearchField").val());
+        }
     });
 
     $("#btnNewAppointment").click(function () {
@@ -36,16 +49,33 @@ $(document).ready(function () {
         var expiryVotingTime = $("#txtExpiryVotingTime").val();
         var username = $("#txtUsername").val();
 
-        addAppointment(
-            appointmentDate,
-            startTime,
-            endTime,
-            location,
-            subject,
-            expiryVotingDate,
-            expiryVotingTime,
-            username
-        );
+        if (
+            appointmentDate == "" ||
+            startTime == "" ||
+            endTime == "" ||
+            location == "" ||
+            subject == "" ||
+            expiryVotingDate == "" ||
+            expiryVotingTime == "" ||
+            username == ""
+        ) {
+            Swal.fire({
+                icon: "error",
+                title: "Oje...",
+                text: "Bitte Parameter eingeben!",
+            });
+        } else {
+            addAppointment(
+                appointmentDate,
+                startTime,
+                endTime,
+                location,
+                subject,
+                expiryVotingDate,
+                expiryVotingTime,
+                username
+            );
+        }
 
         console.log("button has been clicked");
 
@@ -360,7 +390,7 @@ function loadAppointmentById(id) {
     });
 }
 
-function loadTaskByName(searchterm) {
+function loadAppointmentByName(searchterm) {
     $.ajax({
         type: "GET",
         url: serviceHandlerURL,
@@ -373,13 +403,13 @@ function loadTaskByName(searchterm) {
 
         success: function (response) {
             if (response != true) {
-                console.log("Ajax Loaded: loadTaskByName");
+                console.log("Ajax Loaded: loadAppointmentByName");
                 $("#noOfEntries").text("Open appointments: " + response.length);
 
                 reloadEntries(response);
             } else {
                 console.log(
-                    "Ajax Error: loadTaskByName -> Error response is empty"
+                    "Ajax Error: loadAppointmentByName -> Error response is empty"
                 );
                 $("#appointmentTbody").empty();
                 $("#noOfEntries").text("");

@@ -26,7 +26,7 @@ class DataHandler {
         $table = $jsonArray["database"]["table"];
 
         // Create connection
-        $this->conn = new mysqli($servername, $username, $password, $table);
+        $this->conn = new mysqli($servername, $username, $password, $table, 3310);
 
         // Check connection
         if ($this->conn->connect_error) {

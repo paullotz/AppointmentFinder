@@ -52,51 +52,7 @@
         <div class="container">
             <h1 class="text-center">Appointment Finder</h1>
 
-            <!-- Basic Features Card -->
-            <div id="basicFeaturesCard" class="card border-dark">
-                <div class="card-body">
-                    <div class="input-group" id="userNameField">
-                        <span class="input-group-text" id="basic-addon1"
-                            >@</span
-                        >
-                        <input
-                            type="text"
-                            id="txtUsername"
-                            class="form-control"
-                            placeholder="Username"
-                            aria-label="Username"
-                            aria-describedby="basic-addon1"
-                            value="Paul"
-                        />
-                    </div>
-
-                    <div class="input-group">
-                        <button
-                            type="button"
-                            class="btn btn-success"
-                            id="btnRefresh"
-                        >
-                            Refresh
-                        </button>
-                        <button
-                            type="button"
-                            class="btn btn-success"
-                            id="btnShowSearchCard"
-                            onclick="showSearchCard()"
-                        >
-                            Search Appointment
-                        </button>
-                        <button
-                            type="button"
-                            class="btn btn-success"
-                            id="btnShowNewCard"
-                            onclick="showNewCard()"
-                        >
-                            New Appointment
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <div id="basicFeaturesCard" class="card border-dark"></div>
 
             <div id="searchAppointmentsCard" class="card border-dark"></div>
 
@@ -104,33 +60,7 @@
 
             <div id="detailsAppointmentCard" class="card border-dark"></div>
 
-            <!-- All Appointments Card -->
-            <div id="allAppointmentsCard" class="card border-dark">
-                <div class="card-body">
-                    <div id="noOfEntries"></div>
-                    <div class="table-responsive">
-                        <table
-                            class="table table-striped"
-                            id="appointmentTable"
-                        >
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Location</th>
-                                    <th scope="col">Subject</th>
-                                    <th scope="col">Username</th>
-                                    <th scope="col">Details</th>
-                                    <th scope="col">Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody id="appointmentTbody">
-                                <tr></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            <div id="allAppointmentsCard" class="card border-dark"></div>
         </div>
     </body>
 </html>
